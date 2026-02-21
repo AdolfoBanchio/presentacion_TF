@@ -1,0 +1,51 @@
+# LaTeX auxiliary / build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.synctex
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.pdfsync
+
+# BibTeX / Biber
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Index / Glossaries / Nomenclature
+*.idx
+*.ilg
+*.ind
+*.ist
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.acn
+*.acr
+*.alg
+*.loa
+*.nlo
+*.nls
+
+# Intermediate outputs
+*.dvi
+*.ps
+*.xdv
+
+# Package-specific caches
+_minted*/
+*.minted
+.texmf-cache/
+
+# Common build output dirs (if you use -outdir)
+build/
+out/
