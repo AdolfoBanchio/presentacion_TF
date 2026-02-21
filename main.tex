@@ -11,6 +11,7 @@
 %  PAQUETES
 % =======================
 \usepackage{graphicx}
+\usepackage{svg}
 \usepackage{tikz}
 \usepackage{ragged2e}
 \usepackage{microtype}
@@ -164,12 +165,12 @@
 \author{Adolfo Banchio}
 \date{\today}
 
-% Agenda por secciones (opcional)
-%\AtBeginSection[]{
-%  \begin{frame}{}
-%    \tableofcontents[currentsection]
-%  \end{frame}
-%}
+%Agenda por secciones (opcional)
+\AtBeginSection[]{
+  \begin{frame}{}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 
 % =======================
 %  DOCUMENTO
@@ -205,249 +206,20 @@
 }
 
 % -------------------------------------------------
-% 2) AGENDA GENERAL (logo abajo derecha)
+% 2) AGENDA GENERAL
 % -------------------------------------------------
 \begin{frame}{Estructura de la presentación}
   \tableofcontents
 \end{frame}
 
 % -------------------------------------------------
-% SECCIONES DE EJEMPLO
+% SECCIONES
 % -------------------------------------------------
-\section{Motivación}
 
-\begin{frame}{Inteligencia Artificial y ML}
-  \begin{itemize}
-    \item Busqueda de \textbf{agentes} capaces de tomar la decision correcta en funcion de la información disponible.
-  \end{itemize}
-
-  \begin{block}{Aprendizaje automático (\textbf{Machine Learning})}
-    Un programa de computadora aprende de la experiencia E con repecto a alguna clase de tareas T y una medida de desempeño P, si su desempeño en tareas de T, medidio por P, mejora con la experiencia E.
-  \end{block}
-  Segun el tipo de experiencia y medida de desempeño, se divide en:
-  
-    \begin{itemize}
-      \item Aprendizaje supervisado
-      \item Aprendizaje no supervisado
-      \item \textbf{Aprendizaje por refuerzo}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Aprendizaje por Refuerzo (RL)}
-  \begin{columns}[T,onlytextwidth]
-
-    % ---- Columna izquierda: texto ----
-    \column{0.50\textwidth}
-    Un agente interactúa con un entorno dinámico donde:
-    \begin{itemize}
-        \item Observa estados $s_t$
-        \item Ejecuta acciones $a_t$
-        \item Recibe recompensas $r_{t+1}$
-    \end{itemize}
-
-    \vspace{0.2cm}
-    Con el objetivo de maximizar la recompensa final acumulada:
-    \[
-    \max_\pi \ \mathbb{E}[R]
-    \]
-
-    Principales desafíos:
-    \begin{itemize}
-        \item Problema de asignación de crédito
-        \item Exploración vs explotación
-        \item Retroalimentación escasa y diferida
-    \end{itemize}
-
-    % ---- Columna derecha: imagen ----
-    \column{0.50\textwidth}
-    \begin{center}
-      \includegraphics[
-        width=\linewidth,
-        height=0.75\textheight,
-        keepaspectratio
-      ]{./attatchments/interaccion_rl.png}
-    \end{center}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Redes Neuronales}
-  \begin{columns}[T,onlytextwidth]
-
-    % ---- Columna izquierda: texto ----
-    \column{0.40\textwidth}
-      \begin{itemize}
-        \item Comunmente utilizadas como aproximadores de funciones universales.
-        \item Se entrenan mediante metodos basados en el \textbf{descenso por el gradiente}. 
-      \end{itemize}
-      \vspace{0.4cm}
-      \[
-        \theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)
-      \]
-
-    % ---- Columna derecha: imagen ----
-    \column{0.60\textwidth}
-      \begin{center}
-        \includegraphics[
-          width=\linewidth,
-          height=0.75\textheight,
-          keepaspectratio
-        ]{./attatchments/mlp.png}
-      \end{center}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Antecedentes y objetivo}
-  \pause
-  
-  Trabajos anteriores lograron:
-  \begin{itemize}
-      \item Integrar una \textbf{arquitectura neuronal bioinspirada} (Tap Withdrawal Circuit de \textit{C. elegans}) en el marco del aprendizaje por refuerzo.
-      \item Plantear nuevos modelos neuronales (\textbf{modelo Fiuri}) y compararlos con modelos estándar (IandF, Izikievich).
-      \item Utilizar metodos de entrenamiento alternativos al descenso por el gradiente (Optimizacion bayesiana, algoritmos geneticos y busquedas aleatoreas).
-  \end{itemize}
-  
-  \pause
-  \begin{block}{Pregunta central}
-  ¿Puede una arquitectura neuronal biológicamente inspirada (TWC + FIU) entrenarse con métodos basados en gradiente y tener desempeño competitivo?
-  \end{block}
-\end{frame}
-
-
-\section{El Agente Bioinspirado}
-
-\begin{frame}{Dinamica Neuronal FIU}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.50\textwidth}
-
-    % Compactar SOLO las ecuaciones (no toda la slide)
-    {\small
-    \setlength{\abovedisplayskip}{2pt}
-    \setlength{\belowdisplayskip}{2pt}
-    \setlength{\jot}{2pt}
-
-    \begin{equation*}
-      \begin{aligned}
-        S_n &= E_n + \sum_{j=1}^{m} I_{in}^{j}
-      \end{aligned}
-    \end{equation*}
-
-    \begin{equation*}
-      O_n =
-      \begin{cases}
-        S_n - T_n, & \text{si } S_n > T_n \\
-        0,         & \text{en otro caso}
-      \end{cases}
-    \end{equation*}
-
-    \begin{equation*}
-      E_n =
-      \begin{cases}
-        S_n - T_n, & \text{si } S_n > T_n \\
-        E_n - d_n, & \text{si } S_n \le T_n \ \land\  S_n = E_n \\
-        S_n,       & \text{en otro caso}
-      \end{cases}
-    \end{equation*}
-
-    \begin{equation*}
-      I_{in}^{j} =
-      \begin{cases}
-        \ \omega_j O_j, & \text{gap junc. y } O_j \ge E_n \\
-        -\omega_j O_j,  & \text{gap junc. y } O_j < E_n \\
-        \ \omega_j O_j, & \text{exc. química} \\
-        -\omega_j O_j,  & \text{inh. química}
-      \end{cases}
-    \end{equation*}
-    } % end \small
-
-    \column{0.50\textwidth}
-    TODO: Ilustracion de una neurona o como fue implementada (placeholder)
-  \end{columns}
-\end{frame}
-
-\begin{frame}{La arquitectura TWC}
-  \centering
-    \includegraphics[
-      width=\linewidth,
-      height=0.82\textheight,
-      keepaspectratio
-    ]{./attatchments/twc.png}
-\end{frame}
-
-
+\include{sections/01_motivación/motivacion.tex}
+\include{sections/02_marco_teorico/marco_teorico.tex}
 % -------------------------------------------------
-% 3) DIAPOSITIVA DE CONTENIDO (logo abajo derecha)
-% -------------------------------------------------
-\begin{frame}{Título de la diapositiva de contenido}
-  \begin{block}{Idea principal / Resultado}
-    Texto placeholder para explicar la idea principal. Podés escribir 2--4 líneas
-    sin que quede demasiado aire.
-  \end{block}
-
-  \vspace{0.25cm}
-
-  \textbf{Puntos clave:}
-  \begin{itemize}
-    \item Punto 1 (placeholder).
-    \item Punto 2 (placeholder).
-    \item Punto 3 (placeholder).
-    \item hola
-  \end{itemize}
-
-  \vspace{0.15cm}
-
-  \textbf{Figura (placeholder):}
-  \begin{center}
-    \fbox{
-      \parbox{0.75\linewidth}
-      {
-        \centering 
-          \begin{figure}
-            \includegraphics[width=0.8\textwidth]{./attatchments/unc3_a.jpg}
-            \caption{Figura placeholder. Reemplazá esto con tu propia figura.}
-          \end{figure}
-      }
-      }
-  \end{center}
-\end{frame}
-
-\begin{frame}{Título de la diapositiva con imagen}
-  \begin{columns}[T,onlytextwidth]
-
-    % ---- Columna izquierda: texto ----
-    \column{0.45\textwidth}
-    \textbf{Idea principal}
-
-    Texto introductorio breve que contextualiza la imagen. Idealmente 2–3 líneas
-    para no desperdiciar espacio vertical.
-
-    \vspace{0.2cm}
-
-    \begin{itemize}
-      \item Punto clave 1 relacionado con la imagen.
-      \item Punto clave 2 (explicación breve).
-      \item Punto clave 3 si es necesario.
-    \end{itemize}
-
-    \vspace{0.15cm}
-
-    Texto final opcional para cerrar la idea o remarcar una conclusión.
-
-    % ---- Columna derecha: imagen ----
-    \column{0.55\textwidth}
-    \begin{center}
-      \includegraphics[
-        width=\linewidth,
-        height=0.75\textheight,
-        keepaspectratio
-      ]{./attatchments/unc3_a.jpg}
-    \end{center}
-
-  \end{columns}
-\end{frame}
-
-
-% -------------------------------------------------
-% 4) AGRADECIMIENTOS (logo abajo derecha)
+% 4) AGRADECIMIENTOS
 % -------------------------------------------------
 {
 \setbeamercolor{background canvas}{bg=FAMAFBlueDark}

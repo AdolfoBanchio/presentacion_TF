@@ -1,0 +1,79 @@
+% -------------------------------------------------
+% 3) DIAPOSITIVA DE CONTENIDO (logo abajo derecha)
+% -------------------------------------------------
+\begin{frame}{Título de la diapositiva de contenido}
+  \begin{block}{Idea principal / Resultado}
+    Texto placeholder para explicar la idea principal. Podés escribir 2--4 líneas
+    sin que quede demasiado aire.
+  \end{block}
+
+  \vspace{0.25cm}
+
+  \textbf{Puntos clave:}
+  \begin{itemize}
+    \item Punto 1 (placeholder).
+    \item Punto 2 (placeholder).
+    \item Punto 3 (placeholder).
+    \item hola
+  \end{itemize}
+
+  \vspace{0.15cm}
+
+  \textbf{Figura (placeholder):}
+  \begin{center}
+    \fbox{
+      \parbox{0.75\linewidth}
+      {
+        \centering 
+          \begin{figure}
+            \includegraphics[width=0.8\textwidth]{./attatchments/unc3_a.jpg}
+            \caption{Figura placeholder. Reemplazá esto con tu propia figura.}
+          \end{figure}
+      }
+      }
+  \end{center}
+\end{frame}
+
+\begin{frame}{Título de la diapositiva con imagen}
+  \begin{columns}[T,onlytextwidth]
+
+    % ---- Columna izquierda: texto ----
+    \column{0.45\textwidth}
+    \textbf{Idea principal}
+
+    Texto introductorio breve que contextualiza la imagen. Idealmente 2–3 líneas
+    para no desperdiciar espacio vertical.
+
+    \vspace{0.2cm}
+
+    \begin{itemize}
+      \item Punto clave 1 relacionado con la imagen.
+      \item Punto clave 2 (explicación breve).
+      \item Punto clave 3 si es necesario.
+    \end{itemize}
+
+    \vspace{0.15cm}
+
+    Texto final opcional para cerrar la idea o remarcar una conclusión.
+
+    % ---- Columna derecha: imagen ----
+    \column{0.55\textwidth}
+    \begin{center}
+      \includegraphics[
+        width=\linewidth,
+        height=0.75\textheight,
+        keepaspectratio
+      ]{./attatchments/unc3_a.jpg}
+    \end{center}
+
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Solo imagen}
+  \centering
+    \includegraphics[
+      width=\linewidth,
+      height=0.82\textheight,
+      keepaspectratio
+    ]{./attatchments/imagen.png}
+\end{frame}

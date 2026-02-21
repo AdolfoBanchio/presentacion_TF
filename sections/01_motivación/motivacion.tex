@@ -1,0 +1,61 @@
+\section{Motivación}
+
+\begin{frame}{Contexto}
+
+  \begin{itemize}
+    \item El Aprendizaje por Refuerzo Profundo ha mostrado resultados sobresalientes y prometedores en areas como:
+          \begin{itemize}
+            \item Tareas de control: robotica
+            \item Juegos Complejos: Atari
+            \item Entrenamiento de LLMs: fine tunning de chatGPT.
+          \end{itemize}
+    \item Predomina el uso de arquitecturas neuronales tradicionales:
+          \begin{itemize}
+            \item MLP
+            \item CNN
+            \item RNN
+          \end{itemize}
+  \end{itemize}
+
+  \begin{block}{}
+    ¿Que ocurre si utilizamos arquitecturas inspiradas biologicamente?
+  \end{block}
+\end{frame}
+
+\begin{frame}{Antecedentes}  
+  Trabajos anteriores buscaron responder dicha pregunta y lograron:
+  \begin{itemize}
+      \item Integrar una \textbf{arquitectura neuronal bioinspirada} (Tap Withdrawal Circuit de \textit{C. elegans}) en el marco del aprendizaje por refuerzo.
+      \item Plantear nuevos modelos de dinamica neuronal (\textbf{modelo Fiuri}) y compararlos con modelos estándar (IandF, Izikievich).
+      \item Utilizar metodos de entrenamiento alternativos al descenso por el gradiente (Optimizacion bayesiana, algoritmos geneticos y busquedas aleatoreas).
+  \end{itemize}
+  
+  Nos preguntamos si es posible:
+  \begin{itemize}
+    \item Implementar de manera eficiente y vectorizada
+    \item Permitir el uso del el descenso por el gradiente
+    \item Integrar a los algoritmos de Deep RL estandar
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Objetivo y Desafios}
+  \begin{block}{Objetivo}
+    Integrar la arquitectura \textbf{TWC + FIU} al framework de PyTorch e intentar resolver un problema de control continuo utilizando un algoritmo estandar Deep RL.
+  \end{block}
+
+  \textbf{Desafios}
+  \begin{itemize}
+    \item Las arquitecturas bioinspiradas presentan:
+    \begin{itemize}
+        \item Dinámica interna recurrente
+        \item No linealidades inspiradas biológicamente
+        \item Posibles problemas de diferenciabilidad
+    \end{itemize}
+    
+    \item La mayoría de los trabajos previos:
+    \begin{itemize}
+        \item Evitan el descenso por gradiente
+        \item Utilizan métodos evolutivos o búsqueda directa en el espacio de políticas
+    \end{itemize}
+\end{itemize}
+\end{frame}

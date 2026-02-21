@@ -1,2 +1,0 @@
-\beamer@sectionintoc {1}{Motivación}{3}{0}{1}
-\beamer@sectionintoc {2}{El Agente Bioinspirado}{9}{0}{2}
