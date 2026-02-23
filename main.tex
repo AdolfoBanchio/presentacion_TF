@@ -15,6 +15,11 @@
 \usepackage{tikz}
 \usepackage{ragged2e}
 \usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{algpseudocode}
+\usepackage{multimedia}
+\usepackage{booktabs}
+\usepackage{tabularx}
 %\usepackage{enumitem}
 %\setlist[itemize]{nosep,leftmargin=1.2em}
 %\setlist[enumerate]{nosep,leftmargin=1.2em}
@@ -58,9 +63,6 @@
 % Compactación vertical beamer-friendly
 \setbeamertemplate{itemize/enumerate body begin}{\vspace{-2pt}}
 \setbeamertemplate{itemize/enumerate body end}{\vspace{-2pt}}
-
-% Sangrías: NO uses \leftmargini acá (Beamer lo gestiona por templates/márgenes)
-% Si querés más/menos sangría de lista, lo mejor es tocar text margin left/right arriba.
 
 % =======================
 %  BLOQUES (compactos)
@@ -115,7 +117,7 @@
 \setbeamerfont{title}{series=\bfseries,size=\Large}
 \setbeamerfont{frametitle}{series=\bfseries,size=\normalsize}
 
-% Barra superior sutil
+% Barra superior
 \setbeamertemplate{headline}{
   \begin{beamercolorbox}[
     wd=\paperwidth,
@@ -159,8 +161,10 @@
 }
 
 % =======================
-%  METADATOS
+%  METADATOS y COMANDOS
 % =======================
+\newcommand{\nota}[1]{{\color{red} #1}}
+
 \title[Presentación]{Redes Neuronales biologicamente inspiradas aplicadas al aprendizaje por refuerzo profundo}
 \author{Adolfo Banchio}
 \date{\today}
@@ -216,8 +220,14 @@
 % SECCIONES
 % -------------------------------------------------
 
-\include{sections/01_motivación/motivacion.tex}
-\include{sections/02_marco_teorico/marco_teorico.tex}
+\input{sections/01_motivación/motivacion.tex}
+\input{sections/02_marco_teorico/marco_teorico.tex}
+\input{sections/03_agente/agente.tex}
+\input{sections/04_problema/problema.tex}
+\input{sections/05_algoritmo/algoritmo.tex}
+\input{sections/06_estrategias/estrategias.tex}
+\input{sections/07_resultados/resultados.tex}
+\input{sections/08_conclusiones/conclusiones.tex}
 % -------------------------------------------------
 % 4) AGRADECIMIENTOS
 % -------------------------------------------------
@@ -230,10 +240,7 @@
   \centering
   {\Huge\bfseries\color{white}¡Muchas Gracias!}
   \vfill
-
-  {\Large\color{white}¿Preguntas?}
   \vfill
-
   \LogoGraphic{\LogoHeightTitle}
 \end{frame}
 }

@@ -1,0 +1,76 @@
+\section{Dificultades y Estrategias de Mejora}
+
+\begin{frame}{Problema de convergencia a 0}
+    Observamos el problema de \textbf{Retroalimentación escasa y diferida}
+    \vspace{0.2cm}
+    \begin{itemize}
+        \item El exito es un evento escaso
+        \item Utilizar el motor conlleva penalizaciones
+        \item $\pi^\ast$ \rightarrow minimiza el esfuerzo ($a_t \sim 0$)     
+    \end{itemize}
+    Mitigado mediante:
+    \begin{itemize}
+        \item Fomentar exploracion
+        \item Muestreo de transiciones ponderado
+        \item \textit{Reward Shaping}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estrategias de Mejora}
+    \textbf{Exploración con ruido correlacionado: Ornstein-Uhlenbekc(OU)}
+    \begin{itemize}
+        \item Exitoso en \textbf{DDPG}
+        \item Proceso estocastico con relacion temporal, el ruido en tiempo $t$ depende del valor en $t-1$
+        \item Permite exploraciones ruidosas manteniendo una misma dirección
+        \item Prametros:
+            \begin{itemize}
+                \item \Theta :velocidad de reversión
+                \item \mu : media a largo plazo
+                \item \sigma : volatilidad del ruido generado 
+            \end{itemize}
+    \end{itemize}
+
+    \textbf{Muestreo ponderado: Sequence Buffer}
+    \begin{itemize}
+        \item Cada transicion individual tiene la misma probabilidad de ser elegida
+        \item Asignacion de peso por episodio: $w_e = T_e - L + 1$
+        \item Probabilidad de elegir un episodio: $p_e = \frac{w_e}{\sum_j{w_j}}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estrategias de Mejora}
+    \textbf{Reward Shaping}
+    \begin{itemize}
+        \item Politicas que minimicen la cantidad de pasos
+        \item Añadimos un termino adicional a la funcion de recompensa
+        $$
+            \Phi(s) = 4 \cdot \text{clip}\left( \frac{x - x_{min}}{x_{max} - x_{min}}, \ 0, \ 1 \right)
+        $$
+        \item La recompensa modificada:
+        $$
+            r'_t = r_t + \gamma\Phi(s_{t+1}) - \Phi(s_t)
+        $$
+    \end{itemize}
+    \textbf{Seleccion de mejor modelo e hiperparametros}
+    
+    Un modelo observado en el entrenamiento sera mejor cuando maximice:
+    \begin{itemize}
+        \item $\texttt{score} = \overline{R} - \max(0,(\overline{S}-200)\cdot 0.1).$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estrategias de Mejora}
+    \textbf{Busqueda de mejores soluciones: Reward Shaping}
+    \begin{itemize}
+        \item Politicas que minimicen la cantidad de pasos
+        \item Añadimos un termino adicional a la funcion de recompensa
+        $$
+            \Phi(s) = 4 \cdot \text{clip}\left( \frac{x - x_{min}}{x_{max} - x_{min}}, \ 0, \ 1 \right)
+        $$
+        \item La recompensa modificada:
+        $$
+            r'_t = r_t + \gamma\Phi(s_{t+1}) - \Phi(s_t)
+        $$
+    \end{itemize}
+    
+\end{frame}

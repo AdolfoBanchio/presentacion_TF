@@ -55,20 +55,28 @@
 \end{frame}
 
 \begin{frame}{Procesos de Decisión de Markov (MDP)}
-    La interaccion \textbf{Agente-Entorno} se formaliza mediante un MDP.
-    \begin{block}{Proceso de Decision de Markov}
-        Se define como una tupla $...$, donde:
+    La interacción \textbf{Agente–Entorno} se formaliza mediante un Proceso de Decisión de Markov (MDP).
+
+    \begin{block}{Definición}
+        Un MDP se define como la tupla $\mathcal{M} = \langle S, A, P, R, \gamma \rangle$
+        donde:
         \begin{itemize}
-            \item S
-            \item A
-            \item P
-            \item R
-            \item \gamma
+            \item $S$: conjunto de estados posibles.
+            \item $A$: conjunto de acciones disponibles.
+            \item $P(s' \mid s,a)$: probabilidad de transición al estado $s'$ al ejecutar $a$ en $s$.
+            \item $R(s,a,s')$: recompensa inmediata esperada asociada a la transición.
+            \item $\gamma \in [0,1]$: factor de descuento.
         \end{itemize}
     \end{block}
 
     \begin{block}{Propiedad de Markov}
-        El estado actual $s_t$ contiene la informacion necesaria para estimar la posible evolucion del entorno.
+        El estado actual $s_t$ contiene toda la información necesaria para 
+        predecir la evolución futura del entorno:
+        \[
+            \mathbb{P}(s_{t+1}, r_{t+1} \mid s_t, a_t, s_{t-1}, a_{t-1}, \dots, s_0)
+            =
+            \mathbb{P}(s_{t+1}, r_{t+1} \mid s_t, a_t)
+        \]
     \end{block}
 \end{frame}
 
@@ -110,15 +118,7 @@
         \item Se aproximan dichas funciones mediante redes neuronales
     \end{itemize}
 \end{frame}
- 
 
-%Como en la slide anterioor ya deje la idea de que dichas ecuaciones no son posibles de caluclar en espacios continuos, ahora quiero primero dar una idea de la taxonomia y familias de algoritmos de Deep Rl, oralmente explicando que todos consisten de utilizar Redes neuronales como aproximadores de la funcion objetivo. En algunos sera la funcion Q, en otros la politica y para el caso actor critico ambos.
-
-%Luego una diapositiva introduciendo el concepto de los metodos Actor critico, y como se aproximan las funciones con redes: 
-%Q ≈ Q(s,a;θ)
-%π ≈ π(s;θ)
-
-%Y luego continuaremos con Redes recurrentes, dependencia temporal, BPTT y de ahi se desprende la idea de utilizar TD3 + BPTT. Finalmente se dara la inspiracion biologica, el TWC y el desafio tecnico. Pero por el momento estas diapositivas no las armemos.
 
 \begin{frame}{Algoritmos de RL}
   \centering
@@ -129,20 +129,43 @@
     ]{./attatchments/rl_algorithms.png}
 \end{frame}
 
+\begin{frame}{Métodos Actor-Crítico}
+    Se utilizan dos redes neuronales:
+    \begin{itemize}
+        \item \textbf{Actor}: aproxima la política
+        \item \textbf{Critic}: aproxima la función de valor
+    \end{itemize}
+
+    Aproximaciones paramétricas:
+    \[
+    Q^\pi(s,a) \approx Q(s,a;\theta)
+    \]
+    \[
+    \pi(a \mid s) \approx \pi(a \mid s; \phi)
+    \]
+    \begin{itemize}
+        \item El Actor produce directamente la acción
+        \item El Critic evalúa dicha acción
+    \end{itemize}
+\end{frame}
+
+
 \begin{frame}{Redes Neuronales}
   \begin{columns}[T,onlytextwidth]
-
     % ---- Columna izquierda: texto ----
     \column{0.40\textwidth}
       \begin{itemize}
         \item Comunmente utilizadas como aproximadores de funciones universales.
         \item Se entrenan mediante metodos basados en el \textbf{descenso por el gradiente}. 
       \end{itemize}
-      \vspace{0.4cm}
-      \[
-        \theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)
-      \]
 
+      Limitaciones:
+      \begin{itemize}
+        \item Arquitectura feed-forward
+        \item No poseen memoria interna
+        \item No acomulan informacion en una secuencia temporal
+      \end{itemize}
+    
     % ---- Columna derecha: imagen ----
     \column{0.60\textwidth}
       \begin{center}
@@ -156,60 +179,85 @@
 \end{frame}
 
 
-\begin{frame}{Dinamica Neuronal FIU}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.50\textwidth}
+\begin{frame}{Redes Recurrentes y Dependencia Temporal}
+    \begin{columns}[T,onlytextwidth]
+        % ---- Columna izquierda: texto ----
+        \column{0.50\textwidth}
+        Cuando la decision depende del historial, usamos \textbf{Redes Recurrentes}:
+        \begin{itemize}
+            \item Introduce la nocion de estado interno
+            \item Le da valor a la observacion de secuencias temporales
+            \item Se entrenan mediante \textbf{BPTT} y descenso por el gradiente.
+        \end{itemize}
+        
+        \begin{block}{Idea General}
+            Aprovechar los algoritmos de entrenamiento de DeepRL de RNNs para mi futuro modelo bioinspirado
+        \end{block}
+        % ---- Columna derecha: imagen ----
+        \column{0.50\textwidth}
+        \begin{center}
+            \includegraphics[
+                width=0.8\linewidth,
+                height=0.75\textheight,
+                keepaspectratio
+                ]{./attatchments/rnn.png}
+            \end{center}
+        \end{columns}
+    \end{frame}
 
-    % Compactar SOLO las ecuaciones (no toda la slide)
-    {\small
-    \setlength{\abovedisplayskip}{2pt}
-    \setlength{\belowdisplayskip}{2pt}
-    \setlength{\jot}{2pt}
+\begin{frame}{Descenso por el Gradiente y BPTT}
+    \begin{itemize}
+        \item El entrenamiento se basa en minimizar una \textbf{función de error} $L(\theta)$.
+        \item El \textbf{descenso por el gradiente} ajusta los parámetros en la dirección que reduce dicho error:
+    \end{itemize}
 
-    \begin{equation*}
-      \begin{aligned}
-        S_n &= E_n + \sum_{j=1}^{m} I_{in}^{j}
-      \end{aligned}
-    \end{equation*}
+    \vspace{0.2cm}
+    \[
+        \theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)
+    \]
 
-    \begin{equation*}
-      O_n =
-      \begin{cases}
-        S_n - T_n, & \text{si } S_n > T_n \\
-        0,         & \text{en otro caso}
-      \end{cases}
-    \end{equation*}
-
-    \begin{equation*}
-      E_n =
-      \begin{cases}
-        S_n - T_n, & \text{si } S_n > T_n \\
-        E_n - d_n, & \text{si } S_n \le T_n \ \land\  S_n = E_n \\
-        S_n,       & \text{en otro caso}
-      \end{cases}
-    \end{equation*}
-
-    \begin{equation*}
-      I_{in}^{j} =
-      \begin{cases}
-        \ \omega_j O_j, & \text{gap junc. y } O_j \ge E_n \\
-        -\omega_j O_j,  & \text{gap junc. y } O_j < E_n \\
-        \ \omega_j O_j, & \text{exc. química} \\
-        -\omega_j O_j,  & \text{inh. química}
-      \end{cases}
-    \end{equation*}
-    } % end \small
-
-    \column{0.50\textwidth}
-    TODO: Ilustracion de una neurona o como fue implementada (placeholder)
-  \end{columns}
+    \vspace{0.3cm}
+    \begin{block}{Redes Recurrentes}
+        \begin{itemize}
+            \item La salida actual depende del estado interno previo.
+            \item El error final depende de decisiones pasadas.
+            \item Se utiliza \textbf{Backpropagation Through Time (BPTT)}:
+            \begin{itemize}
+                \item Se despliega la red en el tiempo.
+                \item El gradiente se propaga hacia atrás a lo largo de la secuencia.
+            \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
+    
+\begin{frame}{Inspiracion biologica}
+    \begin{columns}[T,onlytextwidth]
+    % ---- Columna izquierda ----
+    \column{0.50\textwidth}
+    Dinamica neuronal Fiuri (\textbf{FIU}):
+    \begin{itemize}
+        \item Diseño simplificado
+        \item Discreto en el tiempo
+        \item Cada neurona tiene:
+            \begin{itemize}
+                \item Dos estados: \textit{interno} (E) y \textit{externo} (O)
+                \item Dos parametros: \textit{umbral de disparo} (Th) y \textit{factor de decaimiento} (d).
+            \end{itemize}
+        \item Tipos de sinapsis:
+            \begin{itemize}
+                \item Exitatorias
+                \item Inhibitorias
+                \item Uniones electricas (Gap Junctions)
+            \end{itemize}
+    \end{itemize}
 
-\begin{frame}{La arquitectura TWC}
-  \centering
-    \includegraphics[
-      width=\linewidth,
-      height=0.82\textheight,
-      keepaspectratio
-    ]{./attatchments/twc.png}
+    % ---- Columna derecha ----
+    \column{0.50\textwidth}
+    Conectoma del \textit{Tap Withdrawal Circuit} del nematodo \textbf{C Elegans}.
+    \begin{itemize}
+        \item Encargado de la respuesta reflejo a estimulos externos
+        \item Compuesto por 11 neuronas: Sensoriales, internas y motoras.
+        \item Presenta conexiones recurrentes esparsas.
+    \end{itemize}
+  \end{columns}
 \end{frame}
